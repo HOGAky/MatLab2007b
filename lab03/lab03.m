@@ -21,17 +21,15 @@ vx = s(:,4);
 vy = s(:,5);
 vz = s(:,6);
 v = sqrt(vx.^2+vy.^2+vz.^2);
-ihit = min(find(z<0));
-if isempty(ihit)
-    iend = length(z);
-else
-    iend = max(1,ihit-1);
+iend = max(find(z>=0));
+if iend < length(z)
+    f = z(iend)/(z(iend)-z(iend+1));
+    x = [x(1:iend);x(iend)+f*(x(iend+1)-x(iend))];
+    y = [y(1:iend);y(iend)+f*(y(iend+1)-y(iend))];
+    v = [v(1:iend);v(iend)+f*(v(iend+1)-v(iend))];
+    t = [t(1:iend);t(iend)+f*(t(iend+1)-t(iend))];
+    z = [z(1:iend);0];
 end
-x = x(1:iend);
-y = y(1:iend);
-z = z(1:iend);
-v = v(1:iend);
-t = t(1:iend);
 figure
 subplot(1,2,1)
 plot3(x,y,z,'LineWidth',1.5)
@@ -51,20 +49,34 @@ grid on
 xlabel('t, с')
 ylabel('v, м/с')
 title('—корость м€ча')
+L = max([max(x)-min(x),max(y)-min(y),max(z)]);
+rb = 0.02*L;
+x1 = min(x)-0.1*L;
+x2 = max(x)+0.1*L;
+y1 = min(y)-0.1*L;
+y2 = max(y)+0.1*L;
+z2 = max(z)+3*rb;
+[sxb,syb,szb] = sphere(16);
+sxb = rb*sxb;
+syb = rb*syb;
+szb = rb*szb;
 figure
 hold on
 grid on
+patch([x1 x2 x2 x1],[y1 y1 y2 y2],[0 0 0 0],[0.6 0.8 0.5],'EdgeColor','none')
 plot3(x,y,zeros(size(x)),'k:')
-hb = plot3(x(1),y(1),z(1),'o','MarkerSize',14,'MarkerFaceColor',[1 0.55 0.1],'MarkerEdgeColor','k');
-ht = plot3(x(1),y(1),z(1),'b-','LineWidth',1.5);
+hb = surf(x(1)+sxb,y(1)+syb,z(1)+rb+szb,'FaceColor',[1 0.55 0.1],'EdgeColor','none');
+ht = plot3(x(1),y(1),z(1)+rb,'b-','LineWidth',1.5);
+axis equal
+axis([x1 x2 y1 y2 0 z2])
 xlabel('x, м')
 ylabel('y, м')
 zlabel('z, м')
 title('јнимаци€ полета вращающегос€ м€ча')
 n = length(x);
-for j = 1:3:n
-    set(hb,'XData',x(j),'YData',y(j),'ZData',z(j))
-    set(ht,'XData',x(1:j),'YData',y(1:j),'ZData',z(1:j))
+for j = unique([1:3:n n])
+    set(hb,'XData',x(j)+sxb,'YData',y(j)+syb,'ZData',z(j)+rb+szb)
+    set(ht,'XData',x(1:j),'YData',y(1:j),'ZData',z(1:j)+rb)
     view(35+40*sin(j/40),20+15*cos(j/55))
     drawnow
 end

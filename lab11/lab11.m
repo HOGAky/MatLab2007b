@@ -34,6 +34,8 @@ for p = 1:2
     title(['Движение: ',names{p}])
     hp = plot(x(1),y(1),'o','MarkerSize',9,'MarkerFaceColor','r','MarkerEdgeColor','k');
     ht = plot(x(1),y(1),'b-','LineWidth',1);
+    pad = 0.08*max(max(x)-min(x),max(y)-min(y));
+    axis([min(x)-pad max(x)+pad min(y)-pad max(y)+pad])
     subplot(1,2,2)
     plot(t,v,'LineWidth',1.4)
     grid on

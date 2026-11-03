@@ -48,14 +48,14 @@ for k = 1:4:length(t)
 end
 m = [0.9*Ms;0.9*Ms;3e20];
 d = 0.83e11;
-x0 = [0 0 -3e11];
+x0 = [0 0 -2e11];
 y0 = [-d d 0];
 vv = [19e3 19e3 40e3];
 al = [0 180 80]*pi/180;
 vx0 = vv.*cos(al);
 vy0 = vv.*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[t,S] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:1e8,s0,opts);
+[t,S] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:2e8,s0,opts);
 lim = 1.15*max(max(abs(S(:,1:6))));
 figure
 hold on

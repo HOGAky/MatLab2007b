@@ -37,7 +37,7 @@ xlabel('x, мм')
 ylabel('I')
 title('Профиль интенсивности')
 figure
-for a = 0.5e-4:0.25e-4:5e-4
+for a = 1e-4:0.25e-4:3.5e-4
     na = max(4,round(30*a/5e-4));
     [sx,sy] = meshgrid(linspace(-a/2,a/2,na),linspace(-a/2,a/2,na));
     sx = sx(:);
@@ -57,7 +57,7 @@ end
 figure
 nr = 7;
 nt = 48;
-for rr = 0.5e-4:0.25e-4:4e-4
+for rr = 0.5e-4:0.25e-4:2e-4
     sx = [];
     sy = [];
     for ir = 1:nr

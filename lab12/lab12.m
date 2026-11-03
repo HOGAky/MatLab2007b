@@ -4,20 +4,20 @@ clc
 close all
 k = 9e9;
 Q1 = 2e-6;
-Q2 = -2e-6;
+Q2 = 2e-6;
 X1 = -0.6;
 Y1 = 0;
 X2 = 0.6;
 Y2 = 0;
-q3 = 1e-8;
-q4 = -1e-8;
+q3 = -3e-8;
+q4 = -3e-8;
 m3 = 1e-4;
 m4 = 1e-4;
-v03 = 0.4;
-v04 = 0.4;
-al3 = -30*pi/180;
-al4 = 210*pi/180;
-s0 = [-0.9;0.8;v03*cos(al3);v03*sin(al3);0.9;-0.8;v04*cos(al4);v04*sin(al4)];
+v03 = 3;
+v04 = 3;
+al3 = 180*pi/180;
+al4 = 0;
+s0 = [0;1.2;v03*cos(al3);v03*sin(al3);0;-1.2;v04*cos(al4);v04*sin(al4)];
 [t,s] = ode45(@(tt,ss) charges_rhs(tt,ss,k,Q1,Q2,X1,Y1,X2,Y2,q3,q4,m3,m4),0:0.01:8,s0);
 x3 = s(:,1);
 y3 = s(:,2);
@@ -38,7 +38,9 @@ t4 = plot(x4(1),y4(1),'-','Color',[0 0.6 0.2]);
 xlabel('x, м')
 ylabel('y, м')
 title('ƒвижение зар€женных частиц в поле двух зар€дов')
-for n = 1:3:length(t)
+lim = 1.15*max(abs([x3;y3;x4;y4;X1;X2]));
+axis([-lim lim -lim lim])
+for n = unique([1:3:length(t) length(t)])
     set(h3,'XData',x3(n),'YData',y3(n))
     set(h4,'XData',x4(n),'YData',y4(n))
     set(t3,'XData',x3(1:n),'YData',y3(1:n))
