@@ -12,7 +12,7 @@ v0 = 30;
 m = rho*4*pi*r^3/3;
 S = pi*r^2;
 s0 = [0;0;v0*cos(alpha);v0*sin(alpha)];
-[t,s] = ode45('rhs2',[0 8],s0,[],m,S,Cd,rho0,g);
+[t,s] = ode45(@(tt,ss) rhs2(tt,ss,m,S,Cd,rho0,g),0:0.01:8,s0);
 x = s(:,1);
 y = s(:,2);
 vx = s(:,3);
@@ -61,7 +61,7 @@ hold on
 grid on
 axis equal
 for j = 1:5
-    [tj,sj] = ode45('rhs2',[0 8],s0,[],m,S,Cds(j),rho0,g);
+    [tj,sj] = ode45(@(tt,ss) rhs2(tt,ss,m,S,Cds(j),rho0,g),0:0.01:8,s0);
     yj = sj(:,2);
     xj = sj(:,1);
     ij = max(find(yj>=0));

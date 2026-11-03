@@ -10,7 +10,7 @@ fi = [0 pi/4 pi/2];
 x0 = [0.08 -0.04 0.05];
 v0 = [0 0 0];
 s0 = [x0(:);v0(:)];
-[t,S] = ode45('forced3_rhs',0:0.01:30,s0,[],m,k,Fm,nu,fi);
+[t,S] = ode45(@(tt,ss) forced3_rhs(tt,ss,m,k,Fm,nu,fi),0:0.01:30,s0);
 x = S(:,1:3);
 v = S(:,4:6);
 figure

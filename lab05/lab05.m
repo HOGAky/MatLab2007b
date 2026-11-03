@@ -2,6 +2,7 @@
 clear
 clc
 close all
+opts = odeset('RelTol',1e-8,'AbsTol',1e-6);
 G = 6.67e-11;
 Ms = 1.989e30;
 m = [Ms;Ms;Ms];
@@ -16,7 +17,7 @@ al = [180 300 60]*pi/180;
 vx0 = v0*cos(al);
 vy0 = v0*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[t,S] = ode45('nbody_rhs',0:dt:T,s0,[],m,G);
+[t,S] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:dt:T,s0,opts);
 lim = 1.15*max(max(abs(S(:,1:6))));
 figure
 hold on
@@ -54,7 +55,7 @@ al = [0 180 80]*pi/180;
 vx0 = vv.*cos(al);
 vy0 = vv.*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[t,S] = ode45('nbody_rhs',0:1e5:1e8,s0,[],m,G);
+[t,S] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:1e8,s0,opts);
 lim = 1.15*max(max(abs(S(:,1:6))));
 figure
 hold on
@@ -96,8 +97,8 @@ vS = sqrt(G*Me*(1+es)/(as*(1-es)));
 Ts = 2.36e6;
 dts = 2.36e3;
 s0 = [qm;0;qs;0;0;vM;0;vS];
-[t,S0] = ode45('ems_rhs',0:dts:Ts,s0,[],G,Me,Mm,0);
-[t,S1] = ode45('ems_rhs',0:dts:Ts,s0,[],G,Me,Mm,1);
+[t,S0] = ode45(@(tt,ss) ems_rhs(tt,ss,G,Me,Mm,0),0:dts:Ts,s0,opts);
+[t,S1] = ode45(@(tt,ss) ems_rhs(tt,ss,G,Me,Mm,1),0:dts:Ts,s0,opts);
 lim = 1.15*qm;
 figure
 subplot(1,2,1)

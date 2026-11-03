@@ -7,7 +7,7 @@ rho = 13.55e3;
 rho0 = 1.26e3;
 mu = 1.48;
 g = 9.81;
-[t,Y] = ode45('rhs1',[0 0.05],[0;0],[],r,rho,rho0,mu,g);
+[t,Y] = ode45(@(tt,ss) rhs1(tt,ss,r,rho,rho0,mu,g),0:1e-4:0.05,[0;0]);
 v = Y(:,1);
 y = Y(:,2);
 figure
@@ -42,7 +42,7 @@ r = 1e-3;
 rho = 7.8e3;
 rho0 = 1e3;
 mu = 1e-3;
-[t,Y] = ode45('rhs1',[0 8],[0;0],[],r,rho,rho0,mu,g);
+[t,Y] = ode45(@(tt,ss) rhs1(tt,ss,r,rho,rho0,mu,g),0:0.02:8,[0;0]);
 v = Y(:,1);
 y = Y(:,2);
 figure

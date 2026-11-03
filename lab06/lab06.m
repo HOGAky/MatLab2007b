@@ -11,7 +11,7 @@ phi0 = 35*pi/180;
 w0 = 0;
 J = m*(b^2+c^2)/12+m*l^2;
 T = 2*pi*sqrt(J/(m*g*l));
-[t,s] = ode45('pend_rhs',0:0.01:4*T,[phi0;w0],[],m,g,l,J);
+[t,s] = ode45(@(tt,ss) pend_rhs(tt,ss,m,g,l,J),0:0.01:4*T,[phi0;w0]);
 phi = s(:,1);
 w = s(:,2);
 figure

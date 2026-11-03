@@ -2,20 +2,21 @@
 clear
 clc
 close all
+opts = odeset('RelTol',1e-8,'AbsTol',1e-6);
 G = 6.67e-11;
 M = 1.989e30;
 mu = G*M;
 aM = 57.91e9;
 eM = 0.206;
-qM = 46e9;
+qM = aM*(1-eM);
 TM = 7.6e6;
 aV = 108.21e9;
 eV = 0.0068;
-qV = 107.476e9;
+qV = aV*(1-eV);
 dt = 0.001*TM;
 tspan = 0:dt:0.9*TM;
 vP = sqrt(mu*(1+eM)/(aM*(1-eM)));
-[t,s] = ode45('kepler_rhs',tspan,[qM;0;0;vP],[],mu);
+[t,s] = ode45(@(tt,ss) kepler_rhs(tt,ss,mu),tspan,[qM;0;0;vP],opts);
 x = s(:,1);
 y = s(:,2);
 n = length(x);
@@ -67,12 +68,11 @@ title('Проверка второго закона Кеплера')
 TV = 2*pi*sqrt(aV^3/mu);
 dtv = TV/1000;
 vPV = sqrt(mu*(1+eV)/(aV*(1-eV)));
-[tv,sv] = ode45('kepler_rhs',0:dtv:TV,[qV;0;0;vPV],[],mu);
-[tm,sm] = ode45('kepler_rhs',0:dtv:TV,[qM;0;0;vP],[],mu);
-rM = sqrt(sm(:,1).^2+sm(:,2).^2);
-dr = diff(rM);
-imins = find(dr(1:end-1)<0 & dr(2:end)>=0)+1;
-TMnum = tm(imins(1));
+[tv,sv] = ode45(@(tt,ss) kepler_rhs(tt,ss,mu),0:dtv:TV,[qV;0;0;vPV],opts);
+[tm,sm] = ode45(@(tt,ss) kepler_rhs(tt,ss,mu),0:dtv:TV,[qM;0;0;vP],opts);
+ic = find(sm(1:end-1,2)<0 & sm(2:end,2)>=0 & sm(1:end-1,1)>0);
+ic = ic(1);
+TMnum = tm(ic)-sm(ic,2)*(tm(ic+1)-tm(ic))/(sm(ic+1,2)-sm(ic,2));
 fprintf('Третий закон: TM = %.6e с, TV = %.6e с\n',TMnum,TV)
 fprintf('TM^2/aM^3 = %.6e с^2/м^3\n',TMnum^2/aM^3)
 fprintf('TV^2/aV^3 = %.6e с^2/м^3\n',TV^2/aV^3)
