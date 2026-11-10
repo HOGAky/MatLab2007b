@@ -79,4 +79,5 @@ for j = unique([1:3:n n])
     set(ht,'XData',x(1:j),'YData',y(1:j),'ZData',z(1:j)+rb)
     view(35+40*sin(j/40),20+15*cos(j/55))
     drawnow
+    pause(0.08)
 end

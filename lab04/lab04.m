@@ -95,6 +95,7 @@ for k = 1:4:length(tm)
     set(hM,'XData',sm(k,1),'YData',sm(k,2))
     set(hV,'XData',sv(k,1),'YData',sv(k,2))
     drawnow
+    pause(0.04)
 end
 plot(sm(end,1),sm(end,2),'s','MarkerSize',8,'MarkerFaceColor','r')
 plot(sv(end,1),sv(end,2),'s','MarkerSize',8,'MarkerFaceColor','r')

@@ -45,6 +45,7 @@ for k = unique([1:10:n n])
     set(ht,'XData',zeros(1,k),'YData',yc(1:k))
     set(hti,'String',['Падение ртутного шарика в глицерине, t = ',num2str(t(k),'%.2f'),' с'])
     drawnow
+    pause(0.04)
 end
 r = 1e-3;
 rho = 7.8e3;
@@ -83,4 +84,5 @@ for k = unique([1:4:n n])
     set(hb,'XData',0,'YData',-y(k))
     set(hti,'String',['Падение стального шарика в воде, t = ',num2str(t(k),'%.2f'),' с'])
     drawnow
+    pause(0.08)
 end

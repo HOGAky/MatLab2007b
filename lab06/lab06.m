@@ -56,4 +56,5 @@ for k = 1:4:length(t)
     set(hr,'XData',px,'YData',py)
     set(hrod,'XData',[0 xc],'YData',[0 yc])
     drawnow
+    pause(0.04)
 end

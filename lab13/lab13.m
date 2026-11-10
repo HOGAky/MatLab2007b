@@ -32,6 +32,7 @@ for tt = linspace(0,4,140)
     set(hs,'ZData',Z)
     title(['Распространение сферической волны, t = ',num2str(tt,'%.2f'),' с'])
     drawnow
+    pause(0.05)
 end
 x1 = -2;
 x2 = 2;
@@ -53,4 +54,5 @@ for tt = linspace(0,4,140)
     set(hs,'ZData',Z)
     title(['Интерференция волн, t = ',num2str(tt,'%.2f'),' с'])
     drawnow
+    pause(0.05)
 end

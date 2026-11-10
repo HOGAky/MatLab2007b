@@ -63,4 +63,5 @@ for n = 1:5:length(t)
         set(hs(j),'XData',sx,'YData',sy)
     end
     drawnow
+    pause(0.05)
 end

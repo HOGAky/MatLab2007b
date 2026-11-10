@@ -46,5 +46,6 @@ for p = 1:2
         set(hp,'XData',x(k),'YData',y(k))
         set(ht,'XData',x(1:k),'YData',y(1:k))
         drawnow
+        pause(0.04)
     end
 end

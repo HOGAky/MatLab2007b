@@ -46,4 +46,5 @@ for tt = linspace(0,3,160)
     ylim([-2.2 2.2])
     title(['Стоячая волна, t = ',num2str(tt,'%.2f'),' с'])
     drawnow
+    pause(0.05)
 end

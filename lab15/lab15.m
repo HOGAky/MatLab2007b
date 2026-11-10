@@ -53,6 +53,7 @@ for a = 1e-4:0.25e-4:3.5e-4
     ylabel('y, мм')
     title([' вадратное отверстие, сторона ',num2str(a*1e3,'%.2f'),' мм'])
     drawnow
+    pause(0.3)
 end
 figure
 nr = 7;
@@ -82,4 +83,5 @@ for rr = 0.5e-4:0.25e-4:2e-4
     ylabel('y, мм')
     title([' руглое отверстие, радиус ',num2str(rr*1e3,'%.2f'),' мм'])
     drawnow
+    pause(0.3)
 end

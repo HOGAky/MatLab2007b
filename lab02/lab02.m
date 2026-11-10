@@ -61,6 +61,7 @@ n = length(x);
 for k = unique([1:4:n n])
     set(h,'XData',x(k)+rb*cos(th),'YData',y(k)+rb+rb*sin(th))
     drawnow
+    pause(0.08)
 end
 Cds = [1.11 1.33 0.55 0.045 0.1];
 names = {'Диск (Cd=1.11)','Полусфера (Cd=1.33)','Полусфера (Cd=0.55)','Каплевидное тело (Cd=0.045)','Каплевидное тело (Cd=0.1)'};

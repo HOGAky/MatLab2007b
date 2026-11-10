@@ -45,6 +45,7 @@ for k = 1:4:length(t)
     set(t2,'XData',S(1:k,2),'YData',S(1:k,5))
     set(t3,'XData',S(1:k,3),'YData',S(1:k,6))
     drawnow
+    pause(0.04)
 end
 m = [0.9*Ms;0.9*Ms;3e20];
 d = 0.83e11;
@@ -83,6 +84,7 @@ for k = 1:4:length(t)
     set(t2,'XData',S(1:k,2),'YData',S(1:k,5))
     set(t3,'XData',S(1:k,3),'YData',S(1:k,6))
     drawnow
+    pause(0.03)
 end
 Me = 5.974e24;
 Mm = 7.35e22;
@@ -139,4 +141,5 @@ for k = 1:3:length(t)
     set(c1,'XData',S1(1:k,3),'YData',S1(1:k,4))
     set(d1,'XData',S1(1:k,1),'YData',S1(1:k,2))
     drawnow
+    pause(0.03)
 end
