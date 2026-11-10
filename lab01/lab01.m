@@ -2,10 +2,6 @@
 clear
 clc
 close all
-labdir = fileparts(mfilename('fullpath'));
-if ~isempty(labdir)
-    cd(labdir)
-end
 r = 5.3e-4;
 rho = 13.55e3;
 rho0 = 1.26e3;

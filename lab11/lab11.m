@@ -2,10 +2,6 @@
 clear
 clc
 close all
-labdir = fileparts(mfilename('fullpath'));
-if ~isempty(labdir)
-    cd(labdir)
-end
 E = 5e4;
 B = 0.5;
 alpha = 20*pi/180;
