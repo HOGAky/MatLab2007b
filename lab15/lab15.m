@@ -1,4 +1,3 @@
-% Лабораторная работа №15
 clear
 clc
 close all
@@ -36,29 +35,24 @@ grid on
 xlabel('x, мм')
 ylabel('I')
 title('Профиль интенсивности')
-figure
-for a = 1e-4:0.25e-4:3.5e-4
+as = 1e-4:0.25e-4:3.5e-4;
+Isq = cell(1,length(as));
+for ia = 1:length(as)
+    a = as(ia);
     na = max(4,round(30*a/5e-4));
     [sx,sy] = meshgrid(linspace(-a/2,a/2,na),linspace(-a/2,a/2,na));
     sx = sx(:);
     sy = sy(:);
     dS = (a/na)^2;
     E = field_sum(X,Y,sx,sy,dS,A0,z,lam,phi0);
-    I = E.^2;
-    imagesc(x*1e3,y*1e3,I)
-    axis xy
-    axis image
-    colorbar
-    xlabel('x, мм')
-    ylabel('y, мм')
-    title(['Квадратное отверстие, сторона ',num2str(a*1e3,'%.2f'),' мм'])
-    drawnow
-    pause(0.3)
+    Isq{ia} = E.^2;
 end
-figure
 nr = 7;
 nt = 48;
-for rr = 0.5e-4:0.25e-4:2e-4
+rs = 0.5e-4:0.25e-4:2e-4;
+Icr = cell(1,length(rs));
+for ir0 = 1:length(rs)
+    rr = rs(ir0);
     sx = [];
     sy = [];
     for ir = 1:nr
@@ -74,14 +68,41 @@ for rr = 0.5e-4:0.25e-4:2e-4
     sy = sy(:);
     dS = pi*rr^2/length(sx);
     E = field_sum(X,Y,sx,sy,dS,A0,z,lam,phi0);
-    I = E.^2;
-    imagesc(x*1e3,y*1e3,I)
-    axis xy
-    axis image
-    colorbar
-    xlabel('x, мм')
-    ylabel('y, мм')
-    title(['Круглое отверстие, радиус ',num2str(rr*1e3,'%.2f'),' мм'])
+    Icr{ir0} = E.^2;
+end
+fig1 = figure;
+him1 = imagesc(x*1e3,y*1e3,Isq{1});
+ax1 = gca;
+axis xy
+axis image
+colorbar
+xlabel('x, мм')
+ylabel('y, мм')
+ht1 = title('Квадратное отверстие');
+fig2 = figure;
+him2 = imagesc(x*1e3,y*1e3,Icr{1});
+ax2 = gca;
+axis xy
+axis image
+colorbar
+xlabel('x, мм')
+ylabel('y, мм')
+ht2 = title('Круглое отверстие');
+c = 0;
+while ishandle(fig1) || ishandle(fig2)
+    c = c+1;
+    if ishandle(fig1)
+        ia = mod(c-1,length(as))+1;
+        set(him1,'CData',Isq{ia})
+        set(ax1,'CLim',[0 max(Isq{ia}(:))])
+        set(ht1,'String',['Квадратное отверстие, сторона ',num2str(as(ia)*1e3,'%.2f'),' мм'])
+    end
+    if ishandle(fig2)
+        ir0 = mod(c-1,length(rs))+1;
+        set(him2,'CData',Icr{ir0})
+        set(ax2,'CLim',[0 max(Icr{ir0}(:))])
+        set(ht2,'String',['Круглое отверстие, радиус ',num2str(rs(ir0)*1e3,'%.2f'),' мм'])
+    end
     drawnow
     pause(0.3)
 end

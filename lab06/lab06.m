@@ -1,4 +1,3 @@
-% Лабораторная работа №6
 clear
 clc
 close all
@@ -33,7 +32,7 @@ grid on
 xlabel('\phi, рад')
 ylabel('\omega, рад/с')
 title('Фазовая траектория центра масс')
-figure
+fig = figure;
 axis equal
 hold on
 grid on
@@ -49,12 +48,17 @@ yc = -l*cos(phi(1));
 [px,py] = rectpts(xc,yc,b,c,phi(1));
 hr = fill(px,py,[0.75 0.5 0.3]);
 hrod = plot([0 xc],[0 yc],'k-','LineWidth',2);
-for k = 1:4:length(t)
-    xc = l*sin(phi(k));
-    yc = -l*cos(phi(k));
-    [px,py] = rectpts(xc,yc,b,c,phi(k));
-    set(hr,'XData',px,'YData',py)
-    set(hrod,'XData',[0 xc],'YData',[0 yc])
-    drawnow
-    pause(0.04)
+while ishandle(fig)
+    for k = 1:4:length(t)
+        if ~ishandle(fig)
+            break
+        end
+        xc = l*sin(phi(k));
+        yc = -l*cos(phi(k));
+        [px,py] = rectpts(xc,yc,b,c,phi(k));
+        set(hr,'XData',px,'YData',py)
+        set(hrod,'XData',[0 xc],'YData',[0 yc])
+        drawnow
+        pause(0.04)
+    end
 end

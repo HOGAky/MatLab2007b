@@ -1,4 +1,3 @@
-% Лабораторная работа №11
 clear
 clc
 close all
@@ -13,6 +12,11 @@ qe = -1.6e-19;
 ms = [mp me];
 qs = [qp qe];
 names = {'Протон','Электрон'};
+fig = zeros(1,2);
+hp = zeros(1,2);
+ht = zeros(1,2);
+xs = cell(1,2);
+ys = cell(1,2);
 for p = 1:2
     m = ms(p);
     q = qs(p);
@@ -24,7 +28,9 @@ for p = 1:2
     vx = s(:,3);
     vy = s(:,4);
     v = sqrt(vx.^2+vy.^2);
-    figure
+    xs{p} = x;
+    ys{p} = y;
+    fig(p) = figure;
     subplot(1,2,1)
     hold on
     grid on
@@ -32,8 +38,8 @@ for p = 1:2
     xlabel('x, м')
     ylabel('y, м')
     title(['Движение: ',names{p}])
-    hp = plot(x(1),y(1),'o','MarkerSize',9,'MarkerFaceColor','r','MarkerEdgeColor','k');
-    ht = plot(x(1),y(1),'b-','LineWidth',1);
+    hp(p) = plot(x(1),y(1),'o','MarkerSize',9,'MarkerFaceColor','r','MarkerEdgeColor','k');
+    ht(p) = plot(x(1),y(1),'b-','LineWidth',1);
     pad = 0.08*max(max(x)-min(x),max(y)-min(y));
     axis([min(x)-pad max(x)+pad min(y)-pad max(y)+pad])
     subplot(1,2,2)
@@ -42,10 +48,18 @@ for p = 1:2
     xlabel('t, с')
     ylabel('v, м/с')
     title('Скорость частицы')
-    for k = 1:5:length(t)
-        set(hp,'XData',x(k),'YData',y(k))
-        set(ht,'XData',x(1:k),'YData',y(1:k))
-        drawnow
-        pause(0.04)
+end
+ks = 1:5:length(xs{1});
+c = 0;
+while any(ishandle(fig))
+    c = c+1;
+    k = ks(mod(c-1,length(ks))+1);
+    for p = 1:2
+        if ishandle(fig(p))
+            set(hp(p),'XData',xs{p}(k),'YData',ys{p}(k))
+            set(ht(p),'XData',xs{p}(1:k),'YData',ys{p}(1:k))
+        end
     end
+    drawnow
+    pause(0.04)
 end

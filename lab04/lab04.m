@@ -1,4 +1,3 @@
-% Лабораторная работа №4
 clear
 clc
 close all
@@ -77,7 +76,7 @@ fprintf('Третий закон: TM = %.6e с, TV = %.6e с\n',TMnum,TV)
 fprintf('TM^2/aM^3 = %.6e с^2/м^3\n',TMnum^2/aM^3)
 fprintf('TV^2/aV^3 = %.6e с^2/м^3\n',TV^2/aV^3)
 fprintf('TM^2/TV^2 = %.6f, aM^3/aV^3 = %.6f\n',TMnum^2/TV^2,aM^3/aV^3)
-figure
+fig = figure;
 hold on
 grid on
 axis equal
@@ -91,11 +90,14 @@ hV = plot(sv(1,1),sv(1,2),'o','MarkerSize',10,'MarkerFaceColor',[1 0.9 0.4],'Mar
 xlabel('x, м')
 ylabel('y, м')
 title('Проверка третьего закона Кеплера')
-for k = 1:4:length(tm)
-    set(hM,'XData',sm(k,1),'YData',sm(k,2))
-    set(hV,'XData',sv(k,1),'YData',sv(k,2))
-    drawnow
-    pause(0.04)
+while ishandle(fig)
+    for k = 1:4:length(tm)
+        if ~ishandle(fig)
+            break
+        end
+        set(hM,'XData',sm(k,1),'YData',sm(k,2))
+        set(hV,'XData',sv(k,1),'YData',sv(k,2))
+        drawnow
+        pause(0.04)
+    end
 end
-plot(sm(end,1),sm(end,2),'s','MarkerSize',8,'MarkerFaceColor','r')
-plot(sv(end,1),sv(end,2),'s','MarkerSize',8,'MarkerFaceColor','r')

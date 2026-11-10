@@ -1,4 +1,3 @@
-% Лабораторная работа №12
 clear
 clc
 close all
@@ -26,6 +25,16 @@ y4 = s(:,6);
 v3 = sqrt(s(:,3).^2+s(:,4).^2);
 v4 = sqrt(s(:,7).^2+s(:,8).^2);
 figure
+plot(t,v3,'LineWidth',1.2)
+hold on
+plot(t,v4,'LineWidth',1.2)
+grid on
+xlabel('t, с')
+ylabel('v, м/с')
+title('Скорости движущихся частиц')
+legend('Частица 3','Частица 4','Location','best')
+
+fig = figure;
 hold on
 grid on
 axis equal
@@ -40,20 +49,16 @@ ylabel('y, м')
 title('Движение заряженных частиц в поле двух зарядов')
 lim = 1.15*max(abs([x3;y3;x4;y4;X1;X2]));
 axis([-lim lim -lim lim])
-for n = unique([1:3:length(t) length(t)])
-    set(h3,'XData',x3(n),'YData',y3(n))
-    set(h4,'XData',x4(n),'YData',y4(n))
-    set(t3,'XData',x3(1:n),'YData',y3(1:n))
-    set(t4,'XData',x4(1:n),'YData',y4(1:n))
-    drawnow
-    pause(0.03)
+while ishandle(fig)
+    for n = unique([1:3:length(t) length(t)])
+        if ~ishandle(fig)
+            break
+        end
+        set(h3,'XData',x3(n),'YData',y3(n))
+        set(h4,'XData',x4(n),'YData',y4(n))
+        set(t3,'XData',x3(1:n),'YData',y3(1:n))
+        set(t4,'XData',x4(1:n),'YData',y4(1:n))
+        drawnow
+        pause(0.03)
+    end
 end
-figure
-plot(t,v3,'LineWidth',1.2)
-hold on
-plot(t,v4,'LineWidth',1.2)
-grid on
-xlabel('t, с')
-ylabel('v, м/с')
-title('Скорости движущихся частиц')
-legend('Частица 3','Частица 4','Location','best')

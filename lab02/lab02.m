@@ -1,4 +1,3 @@
-% Лабораторная работа №2
 clear
 clc
 close all
@@ -43,26 +42,6 @@ grid on
 xlabel('t, с')
 ylabel('v, м/с')
 title('Скорость мяча')
-rb = 0.015*xm;
-th = linspace(0,2*pi,40);
-figure
-hold on
-grid on
-fill([0 xm xm 0],[-0.06*ym -0.06*ym 0 0],[0.6 0.8 0.5],'EdgeColor','none')
-plot([0 xm],[0 0],'k-','LineWidth',2)
-plot(x,y+rb,'k:')
-h = fill(x(1)+rb*cos(th),y(1)+rb+rb*sin(th),'r');
-axis equal
-axis([0 xm -0.06*ym ym+2*rb])
-xlabel('x, м')
-ylabel('y, м')
-title('Анимация полета мяча')
-n = length(x);
-for k = unique([1:4:n n])
-    set(h,'XData',x(k)+rb*cos(th),'YData',y(k)+rb+rb*sin(th))
-    drawnow
-    pause(0.08)
-end
 Cds = [1.11 1.33 0.55 0.045 0.1];
 names = {'Диск (Cd=1.11)','Полусфера (Cd=1.33)','Полусфера (Cd=0.55)','Каплевидное тело (Cd=0.045)','Каплевидное тело (Cd=0.1)'};
 figure
@@ -90,3 +69,29 @@ xlabel('x, м')
 ylabel('y, м')
 title('Траектории тел различной формы')
 legend(names,'Location','best')
+
+rb = 0.015*xm;
+th = linspace(0,2*pi,40);
+fig = figure;
+hold on
+grid on
+fill([0 xm xm 0],[-0.06*ym -0.06*ym 0 0],[0.6 0.8 0.5],'EdgeColor','none')
+plot([0 xm],[0 0],'k-','LineWidth',2)
+plot(x,y+rb,'k:')
+h = fill(x(1)+rb*cos(th),y(1)+rb+rb*sin(th),'r');
+axis equal
+axis([0 xm -0.06*ym ym+2*rb])
+xlabel('x, м')
+ylabel('y, м')
+title('Анимация полета мяча')
+n = length(x);
+while ishandle(fig)
+    for k = unique([1:4:n n])
+        if ~ishandle(fig)
+            break
+        end
+        set(h,'XData',x(k)+rb*cos(th),'YData',y(k)+rb+rb*sin(th))
+        drawnow
+        pause(0.08)
+    end
+end

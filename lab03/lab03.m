@@ -1,4 +1,3 @@
-% Ћабораторна€ работа є3
 clear
 clc
 close all
@@ -60,7 +59,7 @@ z2 = max(z)+3*rb;
 sxb = rb*sxb;
 syb = rb*syb;
 szb = rb*szb;
-figure
+fig = figure;
 hold on
 grid on
 patch([x1 x2 x2 x1],[y1 y1 y2 y2],[0 0 0 0],[0.6 0.8 0.5],'EdgeColor','none')
@@ -73,11 +72,17 @@ xlabel('x, м')
 ylabel('y, м')
 zlabel('z, м')
 title('јнимаци€ полета вращающегос€ м€ча')
+ax = gca;
 n = length(x);
-for j = unique([1:3:n n])
-    set(hb,'XData',x(j)+sxb,'YData',y(j)+syb,'ZData',z(j)+rb+szb)
-    set(ht,'XData',x(1:j),'YData',y(1:j),'ZData',z(1:j)+rb)
-    view(35+40*sin(j/40),20+15*cos(j/55))
-    drawnow
-    pause(0.08)
+while ishandle(fig)
+    for j = unique([1:3:n n])
+        if ~ishandle(fig)
+            break
+        end
+        set(hb,'XData',x(j)+sxb,'YData',y(j)+syb,'ZData',z(j)+rb+szb)
+        set(ht,'XData',x(1:j),'YData',y(1:j),'ZData',z(1:j)+rb)
+        view(ax,35+40*sin(j/40),20+15*cos(j/55))
+        drawnow
+        pause(0.08)
+    end
 end

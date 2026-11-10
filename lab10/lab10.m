@@ -1,4 +1,3 @@
-% Лабораторная работа №10
 clear
 clc
 close all

@@ -1,4 +1,3 @@
-% Лабораторная работа №14
 clear
 clc
 close all
@@ -28,23 +27,31 @@ ylabel('\xi, м')
 ylim([-2.2 2.2])
 title('Образование стоячей волны')
 legend('Набегающая волна','Отраженная волна','Стоячая волна','Узлы','Препятствие','Location','best')
-figure
-for tt = linspace(0,3,160)
-    xi1 = A*cos(om*tt-kk*(x-x1));
-    xi2 = A*cos(om*tt+kk*(x-x1)+pi);
-    xi = xi1+xi2;
-    plot(x,xi1,'--','LineWidth',1)
-    hold on
-    plot(x,xi2,'--','LineWidth',1)
-    plot(x,xi,'r-','LineWidth',1.8)
-    plot(xn,zeros(size(xn)),'ko','MarkerSize',6,'MarkerFaceColor','k')
-    plot([x1 x1],[-2.2 2.2],'k-','LineWidth',3)
-    hold off
-    grid on
-    xlabel('x, м')
-    ylabel('\xi, м')
-    ylim([-2.2 2.2])
-    title(['Стоячая волна, t = ',num2str(tt,'%.2f'),' с'])
-    drawnow
-    pause(0.05)
+fig = figure;
+hold on
+grid on
+h1 = plot(x,xi1,'--','LineWidth',1);
+h2 = plot(x,xi2,'--','LineWidth',1);
+h3 = plot(x,xi,'r-','LineWidth',1.8);
+plot(xn,zeros(size(xn)),'ko','MarkerSize',6,'MarkerFaceColor','k')
+plot([x1 x1],[-2.2 2.2],'k-','LineWidth',3)
+xlabel('x, м')
+ylabel('\xi, м')
+ylim([-2.2 2.2])
+hti = title('Стоячая волна, t = 0.00 с');
+while ishandle(fig)
+    for tt = linspace(0,3,160)
+        if ~ishandle(fig)
+            break
+        end
+        xi1 = A*cos(om*tt-kk*(x-x1));
+        xi2 = A*cos(om*tt+kk*(x-x1)+pi);
+        xi = xi1+xi2;
+        set(h1,'YData',xi1)
+        set(h2,'YData',xi2)
+        set(h3,'YData',xi)
+        set(hti,'String',['Стоячая волна, t = ',num2str(tt,'%.2f'),' с'])
+        drawnow
+        pause(0.05)
+    end
 end

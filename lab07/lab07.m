@@ -1,4 +1,3 @@
-% Лабораторная работа №7
 clear
 clc
 close all
@@ -33,7 +32,7 @@ for i = 1:5
     ylabel('v, м/с')
     title(['Маятник ',num2str(i)])
 end
-figure
+fig = figure;
 hold on
 grid on
 xpos = 1:5;
@@ -53,13 +52,18 @@ end
 hm = plot(xpos+x(1,:),zeros(1,5),'o','MarkerSize',14,'MarkerFaceColor',[0.8 0.3 0.3],'MarkerEdgeColor','k');
 xlabel('x, м')
 title('Собственные колебания пяти связанных грузов')
-for n = 1:5:length(t)
-    xx = [0 x(n,:) 0];
-    set(hm,'XData',xpos+x(n,:))
-    for j = 1:6
-        [sx,sy] = spring_draw(xa(j)+xx(j),0,xa(j+1)+xx(j+1),0,0.06);
-        set(hs(j),'XData',sx,'YData',sy)
+while ishandle(fig)
+    for n = 1:5:length(t)
+        if ~ishandle(fig)
+            break
+        end
+        xx = [0 x(n,:) 0];
+        set(hm,'XData',xpos+x(n,:))
+        for j = 1:6
+            [sx,sy] = spring_draw(xa(j)+xx(j),0,xa(j+1)+xx(j+1),0,0.06);
+            set(hs(j),'XData',sx,'YData',sy)
+        end
+        drawnow
+        pause(0.05)
     end
-    drawnow
-    pause(0.05)
 end
