@@ -2,6 +2,10 @@
 clear
 clc
 close all
+labdir = fileparts(mfilename('fullpath'));
+if ~isempty(labdir)
+    cd(labdir)
+end
 L = 0.5;
 C = 2e-3;
 I0 = 0;

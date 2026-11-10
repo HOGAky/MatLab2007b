@@ -2,6 +2,10 @@
 clear
 clc
 close all
+labdir = fileparts(mfilename('fullpath'));
+if ~isempty(labdir)
+    cd(labdir)
+end
 opts = odeset('RelTol',1e-8,'AbsTol',1e-6);
 G = 6.67e-11;
 M = 1.989e30;
