@@ -31,7 +31,8 @@ hold on
 grid on
 plot(phi,w,'LineWidth',1.4)
 n = length(phi);
-idp = unique(round(linspace(1,n,5)));
+nper = round(n/4);
+idp = unique(round(linspace(1,nper,5)));
 labs = {'A_0','A_k','A_l','A_m','A_n'};
 cols = [1 1 1; 0.2 0.6 1; 0.2 0.6 1; 0.2 0.6 1; 0.5 0.5 0.5];
 for j = 1:5
