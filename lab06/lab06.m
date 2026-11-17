@@ -52,9 +52,7 @@ title('—вободные колебани€ физического ма€тника')
 cb = [-b/2 b/2 b/2 -b/2 -b/2];
 ch = [ c/2  c/2 -c/2 -c/2  c/2];
 hr = patch('XData',[0 0 0 0 0],'YData',[0 0 0 0 0],'FaceColor',[0.75 0.5 0.3],'EdgeColor',[0.4 0.25 0.1],'LineWidth',1);
-hC = plot([0 0],[0 0],'k--','LineWidth',1.2);
 hp = plot(0,0,'o','MarkerSize',8,'MarkerFaceColor','y','MarkerEdgeColor','k');
-hT = text(0.16,-0.2,'CC''','FontSize',12);
 plot([-0.28 0.28],[0 0],'k-','LineWidth',2.5)
 text(-0.28,0.03,'OO''','FontSize',12,'FontWeight','bold')
 plot(0,0,'ko','MarkerSize',8,'MarkerFaceColor','w','MarkerEdgeColor','k')
@@ -72,9 +70,7 @@ while ishandle(fig)
         px = xc + cb*cp - ch*sp;
         py = yc + cb*sp + ch*cp;
         set(hr,'XData',px,'YData',py)
-        set(hC,'XData',[xc-0.13 xc+0.13],'YData',[yc yc])
         set(hp,'XData',xc,'YData',yc)
-        set(hT,'Position',[xc+0.15 yc+0.02])
         drawnow
         pause(0.04)
     end
