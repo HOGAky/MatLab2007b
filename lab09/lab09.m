@@ -30,6 +30,10 @@ figure
 for i = 1:3
     subplot(1,3,i)
     plot(x(:,i),v(:,i),'LineWidth',1.1)
+    hold on
+    plot(x(1,i),v(1,i),'o','MarkerSize',6,'MarkerFaceColor','w','MarkerEdgeColor','k')
+    plot(x(end,i),v(end,i),'o','MarkerSize',6,'MarkerFaceColor',[0.5 0.5 0.5],'MarkerEdgeColor','k')
+    hold off
     grid on
     xlabel('x, ì')
     ylabel('v, ì/ñ')

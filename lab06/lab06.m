@@ -5,8 +5,8 @@ g = 9.81;
 m = 2;
 a = 0.5;
 b = 0.3;
-c = 0.2;
-l = 0.5;
+c = 0.3;
+l = 0.15;
 phi0 = 35*pi/180;
 w0 = 0;
 J = m*(b^2+c^2)/12+m*l^2;
@@ -28,26 +28,36 @@ xlabel('t, с')
 ylabel('\phi, рад')
 title('Угол отклонения центра масс')
 figure
-plot(phi,w,'LineWidth',1.4)
+hold on
 grid on
+plot(phi,w,'LineWidth',1.4)
+n = length(phi);
+idp = unique(round(linspace(1,n,5)));
+labs = {'A_0','A_k','A_l','A_m','A_n'};
+cols = [1 1 1; 0.2 0.6 1; 0.2 0.6 1; 0.2 0.6 1; 0.5 0.5 0.5];
+for j = 1:5
+    plot(phi(idp(j)),w(idp(j)),'o','MarkerSize',9,'MarkerFaceColor',cols(j,:),'MarkerEdgeColor','k')
+    text(phi(idp(j))+0.03,w(idp(j))+0.06,labs{j},'FontSize',10)
+end
 xlabel('\phi, рад')
 ylabel('\omega, рад/с')
 title('Фазовая траектория центра масс')
 fig = figure;
-axis equal
 hold on
 grid on
-depth = 0.06;
-R = 2*l+max(a,c)/2+depth+0.15;
-xlim([-1.3*R 1.3*R])
-ylim([-1.3*R 0.5*R])
+view(35,20)
+axis equal
+L = a/2+0.15;
+axis([-(l+max(b,c)/2+0.15) l+max(b,c)/2+0.15 -(l+max(b,c)/2+0.3) 0.3*L -L L])
 xlabel('x, м')
 ylabel('y, м')
+zlabel('z, м')
 title('Свободные колебания физического маятника')
-plot(0,0,'k+','MarkerSize',12,'LineWidth',2)
-[px,py,pz,F] = rectpts(l*sin(phi(1)),-l*cos(phi(1)),a,b,c,l,phi(1),depth);
+plot3(0,0,0,'ko','MarkerSize',10,'MarkerFaceColor','w','MarkerEdgeColor','k')
+hO = plot3([0 0],[0 0],[-L L],'k-','LineWidth',2.5);
+hC = plot3([0 -l],[0 -l],[-L L],'k--','LineWidth',1.5);
+[px,py,pz,F] = rectpts(phi(1),l,b,c,a);
 hr = patch('Vertices',[px(:) py(:) pz(:)],'Faces',F,'FaceColor',[0.75 0.5 0.3],'EdgeColor',[0.4 0.25 0.1],'LineWidth',0.8);
-hrod = plot([0 l*sin(phi(1))],[0 -l*cos(phi(1))],'k-','LineWidth',2);
 while ishandle(fig)
     for k = 1:4:length(t)
         if ~ishandle(fig)
@@ -55,9 +65,9 @@ while ishandle(fig)
         end
         xc = l*sin(phi(k));
         yc = -l*cos(phi(k));
-        [px,py,pz,F] = rectpts(xc,yc,a,b,c,l,phi(k),depth);
+        [px,py,pz,F] = rectpts(phi(k),l,b,c,a);
         set(hr,'Vertices',[px(:) py(:) pz(:)])
-        set(hrod,'XData',[0 xc],'YData',[0 yc])
+        set(hC,'XData',[xc xc],'YData',[yc yc])
         drawnow
         pause(0.04)
     end

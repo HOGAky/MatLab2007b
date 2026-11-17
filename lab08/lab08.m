@@ -27,12 +27,20 @@ legend('1','2','Location','best')
 figure
 subplot(1,2,1)
 plot(y(:,1),v(:,1),'LineWidth',1.1)
+hold on
+plot(y(1,1),v(1,1),'o','MarkerSize',6,'MarkerFaceColor','w','MarkerEdgeColor','k')
+plot(y(end,1),v(end,1),'o','MarkerSize',6,'MarkerFaceColor',[0.5 0.5 0.5],'MarkerEdgeColor','k')
+hold off
 grid on
 xlabel('y_1, м')
 ylabel('v_1, м/с')
 title('Маятник 1')
 subplot(1,2,2)
 plot(y(:,2),v(:,2),'LineWidth',1.1)
+hold on
+plot(y(1,2),v(1,2),'o','MarkerSize',6,'MarkerFaceColor','w','MarkerEdgeColor','k')
+plot(y(end,2),v(end,2),'o','MarkerSize',6,'MarkerFaceColor',[0.5 0.5 0.5],'MarkerEdgeColor','k')
+hold off
 grid on
 xlabel('y_2, м')
 ylabel('v_2, м/с')
