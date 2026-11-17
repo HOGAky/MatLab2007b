@@ -58,7 +58,7 @@ al = [0 180 80]*pi/180;
 vx0 = vv.*cos(al);
 vy0 = vv.*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:2e8,s0,opts);
+[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:2e4:1.2e7,s0,opts);
 lim = 1.15*max(max(abs(Sb(:,1:6))));
 fig2 = figure;
 hold on
@@ -147,9 +147,9 @@ xlabel('x, м')
 ylabel('y, м')
 title('б - с учетом возмущени€ Ћуны')
 
-ka = 1:2:length(ta);
-kb = 1:8:length(tb);
-kc = 1:2:length(tc);
+ka = 1:4:length(ta);
+kb = 1:2:length(tb);
+kc = 1:3:length(tc);
 c = 0;
 while ishandle(fig1) || ishandle(fig2) || ishandle(fig3)
     c = c+1;
@@ -172,5 +172,5 @@ while ishandle(fig1) || ishandle(fig2) || ishandle(fig3)
         set(mC0,'XData',S1(k,1),'YData',S1(k,2))
     end
     drawnow
-    pause(0.03)
+    pause(0.05)
 end
