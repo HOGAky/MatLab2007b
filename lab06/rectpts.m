@@ -1,5 +1,20 @@
-function [px,py] = rectpts(xc,yc,b,c,phi)
-bx = [b/2 b/2 -b/2 -b/2 b/2];
-by = [c/2 -c/2 -c/2 c/2 c/2];
-px = xc+bx*cos(phi)-by*sin(phi);
-py = yc+bx*sin(phi)+by*cos(phi);
+function [px,py,pz,F] = rectpts(xc,yc,a,b,c,l,phi,depth)
+% Параллелепипед-маятник. Центр масс C в (xc,yc). Ось вращения OO'
+% смещена от C на расстояние l вдоль направления маятника и проходит
+% по ребру параллелепипеда (как на рис.1 методички). a - размер вдоль
+% направления маятника, c - в плоскости качания, b - в глубину (экран).
+cp = cos(phi);
+sp = sin(phi);
+ux = -sp;
+uy = cp;
+vx = cp;
+vy = sp;
+ccx = xc+l*vx;
+ccy = yc+l*vy;
+d = [ -a/2,  a/2,  a/2, -a/2, -a/2,  a/2,  a/2, -a/2 ];
+w = depth*[ -1, -1,  1,  1, -1, -1,  1,  1 ];
+h = [ -c/2, -c/2, -c/2, -c/2,  c/2,  c/2,  c/2,  c/2 ];
+px = ccx + d.*vx + h.*ux;
+py = ccy + d.*vy + h.*uy;
+pz = w;
+F = [1 4 3 2; 5 6 7 8; 1 2 6 5; 2 3 7 6; 3 4 8 7; 4 1 5 8];
