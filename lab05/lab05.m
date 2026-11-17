@@ -51,14 +51,14 @@ title('Движение компонент тройной звезды')
 % Задание 2. Астероид в поле двойной звезды
 m = [0.9*Ms;0.9*Ms;3e20];
 d = 0.83e11;
-x0 = [-1.5e11 0 1.0e11];
-y0 = [-1.5e11 0 -2.5e11];
+x0 = [0 0 1.0e11];
+y0 = [-d d -2.5e11];
 vv = [19e3 19e3 40e3];
 al = [0 180 80]*pi/180;
 vx0 = vv.*cos(al);
 vy0 = vv.*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:2.5e7,s0,opts);
+[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:1.36e7,s0,opts);
 lim = 1.15*max(max(abs(Sb(:,1:6))));
 fig2 = figure;
 hold on
