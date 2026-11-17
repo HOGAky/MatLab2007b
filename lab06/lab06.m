@@ -46,9 +46,9 @@ hold on
 grid on
 axis equal
 axis([-0.3 0.3 -0.4 0.12])
-xlabel('x, м')
-ylabel('y, м')
-title('—вободные колебани€ физического ма€тника')
+xlabel('x, м','Interpreter','none')
+ylabel('y, м','Interpreter','none')
+title('—вободные колебани€ физического ма€тника','Interpreter','none')
 cb = [-b/2 b/2 b/2 -b/2 -b/2];
 ch = [ c/2  c/2 -c/2 -c/2  c/2];
 hr = patch('XData',[0 0 0 0 0],'YData',[0 0 0 0 0],'FaceColor',[0.75 0.5 0.3],'EdgeColor',[0.4 0.25 0.1],'LineWidth',1);
