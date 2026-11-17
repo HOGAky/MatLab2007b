@@ -3,10 +3,9 @@ clc
 close all
 g = 9.81;
 m = 2;
-a = 0.5;
 b = 0.3;
-c = 0.3;
-l = 0.15;
+c = 0.4;
+l = 0.2;
 phi0 = 35*pi/180;
 w0 = 0;
 J = m*(b^2+c^2)/12+m*l^2;
@@ -45,29 +44,37 @@ title('Фазовая траектория центра масс')
 fig = figure;
 hold on
 grid on
-view(35,20)
 axis equal
-L = a/2+0.15;
-axis([-(l+max(b,c)/2+0.15) l+max(b,c)/2+0.15 -(l+max(b,c)/2+0.3) 0.3*L -L L])
+axis([-0.5 0.5 -0.55 0.15])
 xlabel('x, м')
 ylabel('y, м')
-zlabel('z, м')
 title('Свободные колебания физического маятника')
-plot3(0,0,0,'ko','MarkerSize',10,'MarkerFaceColor','w','MarkerEdgeColor','k')
-hO = plot3([0 0],[0 0],[-L L],'k-','LineWidth',2.5);
-hC = plot3([0 -l],[0 -l],[-L L],'k--','LineWidth',1.5);
-[px,py,pz,F] = rectpts(phi(1),l,b,c,a);
-hr = patch('Vertices',[px(:) py(:) pz(:)],'Faces',F,'FaceColor',[0.75 0.5 0.3],'EdgeColor',[0.4 0.25 0.1],'LineWidth',0.8);
+plot([-0.4 0.4],[0 0],'k-','LineWidth',2.5)
+text(-0.4,0.03,'OO''','FontSize',12,'FontWeight','bold')
+plot(0,0,'ko','MarkerSize',8,'MarkerFaceColor','w','MarkerEdgeColor','k')
+text(0.02,0.03,'O','FontSize',12)
+hC = plot([0 0],[0 0],'k--','LineWidth',1.2);
+hp = plot(0,0,'o','MarkerSize',8,'MarkerFaceColor','y','MarkerEdgeColor','k');
+hT = text(0.26,-0.2,'CC''','FontSize',12);
+cb = [-b/2 b/2 b/2 -b/2 -b/2];
+ch = [ c/2  c/2 -c/2 -c/2  c/2];
+hr = patch('XData',[0 0 0 0 0],'YData',[0 0 0 0 0],'FaceColor',[0.75 0.5 0.3],'EdgeColor',[0.4 0.25 0.1],'LineWidth',1);
 while ishandle(fig)
     for k = 1:4:length(t)
         if ~ishandle(fig)
             break
         end
-        xc = l*sin(phi(k));
-        yc = -l*cos(phi(k));
-        [px,py,pz,F] = rectpts(phi(k),l,b,c,a);
-        set(hr,'Vertices',[px(:) py(:) pz(:)])
-        set(hC,'XData',[xc xc],'YData',[yc yc])
+        ph = phi(k);
+        xc = l*sin(ph);
+        yc = -l*cos(ph);
+        cp = cos(ph);
+        sp = sin(ph);
+        px = xc + cb*cp - ch*sp;
+        py = yc + cb*sp + ch*cp;
+        set(hr,'XData',px,'YData',py)
+        set(hC,'XData',[xc-0.25 xc+0.25],'YData',[yc yc])
+        set(hp,'XData',xc,'YData',yc)
+        set(hT,'Position',[xc+0.26 yc+0.03])
         drawnow
         pause(0.04)
     end
