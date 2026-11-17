@@ -24,8 +24,8 @@ fig1 = figure;
 hold on
 grid on
 axis equal
-xlim([-lim lim])
-ylim([-lim lim])
+xlim([-1.5e12 1.5e12])
+ylim([-1.5e12 1.5e12])
 plot(Sa(:,1),Sa(:,4),'-','Color',[0.8 0.1 0.1],'LineWidth',1.2)
 plot(Sa(:,2),Sa(:,5),'-','Color',[0.1 0.3 0.8],'LineWidth',1.2)
 plot(Sa(:,3),Sa(:,6),'-','Color',[0.1 0.6 0.1],'LineWidth',1.2)
@@ -51,21 +51,21 @@ title('Движение компонент тройной звезды')
 % Задание 2. Астероид в поле двойной звезды
 m = [0.9*Ms;0.9*Ms;3e20];
 d = 0.83e11;
-x0 = [0 0 -1.5e11];
-y0 = [-d d 0];
+x0 = [-1.5e11 0 1.0e11];
+y0 = [-1.5e11 0 -2.5e11];
 vv = [19e3 19e3 40e3];
 al = [0 180 80]*pi/180;
 vx0 = vv.*cos(al);
 vy0 = vv.*sin(al);
 s0 = [x0(:);y0(:);vx0(:);vy0(:)];
-[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:2e4:1.2e7,s0,opts);
+[tb,Sb] = ode45(@(tt,ss) nbody_rhs(tt,ss,m,G),0:1e5:2.5e7,s0,opts);
 lim = 1.15*max(max(abs(Sb(:,1:6))));
 fig2 = figure;
 hold on
 grid on
 axis equal
-xlim([-lim lim])
-ylim([-lim lim])
+xlim([-4e11 2e11])
+ylim([-3e11 3e11])
 plot(Sb(:,1),Sb(:,4),'-','Color',[0.8 0.1 0.1],'LineWidth',1.2)
 plot(Sb(:,2),Sb(:,5),'-','Color',[0.1 0.3 0.8],'LineWidth',1.2)
 plot(Sb(:,3),Sb(:,6),'--','Color',[0.1 0.6 0.1],'LineWidth',1.2)
@@ -110,8 +110,8 @@ subplot(1,2,1)
 hold on
 grid on
 axis equal
-xlim([-lim lim])
-ylim([-lim lim])
+xlim([-4.5e8 4.5e8])
+ylim([-4.5e8 4.5e8])
 plot(S0(:,3),S0(:,4),'-','Color',[0.1 0.6 0.1],'LineWidth',1.2)
 plot(0,0,'o','MarkerSize',12,'MarkerFaceColor',[0.2 0.5 1],'MarkerEdgeColor','k')
 text(0.04*lim,0.04*lim,'A_0,A_n','FontSize',10)
@@ -127,8 +127,8 @@ subplot(1,2,2)
 hold on
 grid on
 axis equal
-xlim([-lim lim])
-ylim([-lim lim])
+xlim([-4.5e8 4.5e8])
+ylim([-4.5e8 4.5e8])
 plot(S1(:,3),S1(:,4),'-','Color',[0.1 0.6 0.1],'LineWidth',1.2)
 plot(S1(:,1),S1(:,2),'-','Color',[0.8 0.1 0.1],'LineWidth',1.2)
 plot(0,0,'o','MarkerSize',12,'MarkerFaceColor',[0.2 0.5 1],'MarkerEdgeColor','k')
@@ -148,7 +148,7 @@ ylabel('y, м')
 title('б - с учетом возмущения Луны')
 
 ka = 1:4:length(ta);
-kb = 1:2:length(tb);
+kb = 1:length(tb);
 kc = 1:3:length(tc);
 c = 0;
 while ishandle(fig1) || ishandle(fig2) || ishandle(fig3)
